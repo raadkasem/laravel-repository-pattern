@@ -20,3 +20,5 @@ Route::get('/', function () {
 });
 
 Route::get('/customers', 'App\Http\Controllers\CustomerController@index');
+
+Route::get('/customer/{customerId}', 'App\Http\Controllers\CustomerController@show');

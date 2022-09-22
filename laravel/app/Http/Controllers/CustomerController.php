@@ -3,25 +3,29 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
+use App\Repositories\CustomerRepository;
 use Illuminate\Http\Request;
 
 class CustomerController extends Controller
 {
+
+    /**
+     * @var CustomerRepository
+     */
+    private $customerRepository;
+
+    public function __construct(CustomerRepository $customerRepository)
+    {
+        $this->customerRepository = $customerRepository;
+    }
+
     public function index()
     {
-        $customer = Customer::orderBy('name','asc')
-        ->where('active', '1')
-            ->with('user')->get()
-        ->map(function ($customer){
-            return [
-                'customer_id'=> $customer->id,
-                'name' => $customer->name,
-                'active' => $customer->active,
-                'created_by' => $customer->user->email,
-                'last_updated' => $customer->updated_at->diffForHumans()
-            ];
-        });
+        return $this->customerRepository->all();
+    }
 
-        return $customer;
+    public function show($customerId)
+    {
+        return $this->customerRepository->findById($customerId);
     }
 }
