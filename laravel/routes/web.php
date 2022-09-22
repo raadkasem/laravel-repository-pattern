@@ -17,5 +17,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
 //    Debugbar::info('hey');
     return view('welcome');
-    dd(public_path('public'));
 });
+
+Route::get('/customers', 'App\Http\Controllers\CustomerController@index');
