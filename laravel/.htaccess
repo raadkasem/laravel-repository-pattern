@@ -1,0 +1,5 @@
+# Hide a specific file
+<FilesMatch "^\.env">
+    Order allow,deny
+    Deny from all
+</Files>
