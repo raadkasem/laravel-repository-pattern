@@ -9,6 +9,9 @@ class CustomerController extends Controller
 {
     public function index()
     {
-        return Customer::all();
+        $customer = Customer::orderBy('name','asc')
+        ->where('active', '1')->get();
+
+        return $customer;
     }
 }
