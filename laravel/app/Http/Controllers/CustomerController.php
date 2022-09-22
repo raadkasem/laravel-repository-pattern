@@ -28,4 +28,21 @@ class CustomerController extends Controller
     {
         return $this->customerRepository->findById($customerId);
     }
+
+
+    public function update($customerId)
+    {
+        $this->customerRepository->update($customerId);
+
+        return redirect('customer/'.$customerId);
+
+    }
+
+    public function destroy($customerId)
+    {
+        $this->customerRepository->delete($customerId);
+
+        return redirect('customers/');
+
+    }
 }

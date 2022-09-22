@@ -11,32 +11,37 @@ class CustomerRepository
         return Customer::orderBy('name','asc')
             ->where('active', '1')
             ->with('user')->get()
-            ->map(function ($customer){
-                return $this->format($customer);
-            });
+            ->map->format();
+
+
+//        return Customer::orderBy('name','asc')
+//            ->where('active', '1')
+//            ->with('user')->get()
+//            ->map(function ($customer){
+//                return $customer->format();
+//            });
     }
 
     public function findById($customerId): array
     {
-        $customer =  Customer::where('id', $customerId)
+        return Customer::where('id', $customerId)
             ->where('active', '1')
             ->with('user')
-            ->firstOrFail();
-        return  $this->format($customer);
+            ->firstOrFail()->format();
     }
 
-    /**
-     * @param $customer
-     * @return array
-     */
-    function format($customer): array
+    public function update($customerId)
     {
-        return [
-            'customer_id' => $customer->id,
-            'name' => $customer->name,
-            'active' => $customer->active,
-            'created_by' => $customer->user->email,
-            'last_updated' => $customer->updated_at->diffForHumans()
-        ];
+        $customer = Customer::where('id', $customerId)
+            ->firstOrFail();
+
+        $customer->update(request()->only('name'));
+    }
+
+    public function delete($customerId)
+    {
+        Customer::where('id', $customerId)
+            ->delete();
+
     }
 }

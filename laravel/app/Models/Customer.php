@@ -15,4 +15,18 @@ class Customer extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    /**
+     * @return array
+     */
+    function format(): array
+    {
+        return [
+            'customer_id' => $this->id,
+            'name' => $this->name,
+            'active' => $this->active,
+            'created_by' => $this->user->email,
+            'last_updated' => $this->updated_at->diffForHumans()
+        ];
+    }
 }
